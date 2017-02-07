@@ -16,7 +16,7 @@ aptly snapshot create trusty-security from mirror trusty-security
 
 aptly snapshot merge ubuntu-trusty trusty-main trusty-updates trusty-security
 
-aptly publish snapshot ubuntu-trusty ubuntu
+aptly -distribution=ubuntu publish snapshot ubuntu-trusty ubuntu
 
 
 
