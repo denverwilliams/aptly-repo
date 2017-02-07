@@ -147,7 +147,6 @@ publish(){
   done
   rm -f ${tempdir}/distribution
 #  end_time
-}
 
 
 # Do things here
@@ -159,6 +158,7 @@ publish switch
 
 aptly publish list
 
+
 # Clean up the aptly db of dangling references and packages nolonger used in the repos or
 # snapshots
 aptly db cleanup
@@ -166,3 +166,5 @@ aptly graph
 mv /tmp/aptly-graph* /aptly/public/aptly-graph.png
 
 # vim: tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
+
+aptly_serve 
