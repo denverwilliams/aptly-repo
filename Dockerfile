@@ -23,4 +23,7 @@ RUN gpg --allow-secret-key-import --import /gpgkeys/private.key
 RUN gpg --import /gpgkeys/public.key
 RUN echo DEBSIGN_KEYID=5AEFF845 > /etc/devscripts.conf
 
+#Import ubuntu Keys
+RUN gpg --no-default-keyring --keyring trustedkeys.gpg --keyserver keys.gnupg.net --recv-keys 40976EAF437D05B5 3B4FE6ACC0B21F32
+
 CMD []
