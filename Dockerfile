@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Instructions from: http://www.aptly.info/download/
 RUN apt-get update && \
-apt-get -y install wget gnupg xz-utils bzip2
+apt-get -y install wget gnupg xz-utils bzip2 graphviz
 RUN echo "deb http://repo.aptly.info/ squeeze main" > /etc/apt/sources.list.d/aptly.list
 RUN wget -qO - https://www.aptly.info/pubkey.txt | apt-key add -
 
