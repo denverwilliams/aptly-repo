@@ -6,7 +6,7 @@ line="---------------------------------------------------"
 # If I need tempfiles lets do it cleanly
 function cleanup {
   echo ${line}
-  cat ${tempdir}/*
+#  cat ${tempdir}/*
   rm -rf ${tempdir}
   echo "Removed ${tempdir}"
   exit
@@ -78,10 +78,20 @@ declare -A MIRROR
 # By lumping the componets all together may make things easier sometimes but has
 # issues if you plan to audit where packages originated.
 #
-MIRROR[ubuntu]="http://nz.archive.ubuntu.com/ubuntu trusty main universe multiverse restricted"
-MIRROR[ubuntu-security]="http://nz.archive.ubuntu.com/ubuntu trusty-security main universe multiverse restricted"
-MIRROR[ubuntu-updates]="http://nz.archive.ubuntu.com/ubuntu trusty-updates main universe multiverse restricted"
-MIRROR[ubuntu]="http://nz.archive.ubuntu.com/ubuntu trusty main universe multiverse restricted"
+MIRROR[ubuntu_main]="http://nz.archive.ubuntu.com/ubuntu trusty main"
+MIRROR[ubuntu_universe]="http://nz.archive.ubuntu.com/ubuntu trusty universe"
+MIRROR[ubuntu_multiverse]="http://nz.archive.ubuntu.com/ubuntu trusty multiverse"
+MIRROR[ubuntu_restricted]="http://nz.archive.ubuntu.com/ubuntu trusty restricted"
+
+MIRROR[ubuntu-security_main]="http://nz.archive.ubuntu.com/ubuntu trusty-security main"
+MIRROR[ubuntu-security_universe]="http://nz.archive.ubuntu.com/ubuntu trusty-security universe"
+MIRROR[ubuntu-security_multiverse]="http://nz.archive.ubuntu.com/ubuntu trusty-security multiverse"
+MIRROR[ubuntu-security_restricted]="http://nz.archive.ubuntu.com/ubuntu trusty-security restricted"
+
+MIRROR[ubuntu-updates_main]="http://nz.archive.ubuntu.com/ubuntu trusty-updates main"
+MIRROR[ubuntu-updates_universe]="http://nz.archive.ubuntu.com/ubuntu trusty-updates universe"
+MIRROR[ubuntu-updates_multiverse]="http://nz.archive.ubuntu.com/ubuntu trusty-updates multiverse"
+MIRROR[ubuntu-updates_restricted]="http://nz.archive.ubuntu.com/ubuntu trusty-updates restricted"
 
 # This will create the mirror the first time if its not already on the machine.
 start_time(){
@@ -141,9 +151,9 @@ publish(){
     snapshot_list_updates=$(aptly snapshot list -raw | grep ${distribution} | grep updates | tr "\\n" " " )
 
     #print "aptly publish $1 -component="main,contrib" -distribution=${distribution} ${snapshot_list} atg"
-    aptly publish $1 -component="${components}" -distribution="${distribution}" ${snapshot_list} atg
+    aptly publish $1 -component="${components}" -distribution="${distribution}" ${snapshot_list}
     #print "aptly publish $1 -component="main,contrib" -distribution=${distribution}-updates ${snapshot_list_updates} atg"
-    aptly publish $1 -component="${components}" -distribution="${distribution}"-updates ${snapshot_list_updates} atg
+    aptly publish $1 -component="${components}" -distribution="${distribution}"-updates ${snapshot_list_updates}
   done
   rm -f ${tempdir}/distribution
   }
@@ -154,8 +164,8 @@ publish(){
 create_mirror
 update_mirror
 create_snapshot
-#publish snapshot
-publish switch
+publish snapshot
+#publish switch
 
 aptly publish list
 
